@@ -19,12 +19,12 @@ app.post('/posts/:id/comments',async (req,res)=>{
     let postId=req.params.id
     let commentArray=comments[postId]||[]
     let commentId=randomBytes(4).toString('hex')
-    let comment={id:commentId,...req.body}
+    let comment={id:commentId,...req.body,status:'pending'}
     try{
         await axios.post('http://localhost:4005/events',{
             type:'CommentCreated',
             data:{
-                ...comment,postId
+                ...comment,postId,status:'pending'
             }
         })
     }
